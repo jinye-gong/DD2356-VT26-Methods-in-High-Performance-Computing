@@ -17,3 +17,9 @@ build/
 dist/
 *.o
 *.out
+*.exe
+a.out
+assignment2/assignment2_upload.zip
+assignment2/assignment2_upload/
+assignment2/**/spmv
+assignment2/**/roofline
