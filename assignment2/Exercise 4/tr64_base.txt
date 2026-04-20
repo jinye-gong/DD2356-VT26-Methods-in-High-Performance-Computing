@@ -1,0 +1,3 @@
+Transpose 64 x 64
+Mode: base
+BaseTime = 8.82e-07 s, Base Rate = 3.71e+04 MB/s

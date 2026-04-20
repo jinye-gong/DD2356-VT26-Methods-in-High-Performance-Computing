@@ -1,0 +1,25 @@
+Transpose 64 x 64
+Mode: base
+BaseTime = 1.10e-06 s, Base Rate = 2.99e+04 MB/s
+
+ Performance counter stats for 'taskset -c 0 ./transpose.out 64':
+
+         3,870,068      cpu_atom/cycles/                                                        (38.29%)
+         4,824,612      cpu_core/cycles/                                                        (61.71%)
+         2,565,076      cpu_atom/instructions/           #    0.66  insn per cycle              (38.29%)
+         7,205,464      cpu_core/instructions/           #    1.49  insn per cycle              (61.71%)
+           641,450      cpu_atom/L1-dcache-loads/                                               (38.29%)
+         1,464,726      cpu_core/L1-dcache-loads/                                               (61.71%)
+   <not supported>      cpu_atom/L1-dcache-load-misses/                                       
+            73,771      cpu_core/L1-dcache-load-misses/  #    5.04% of all L1-dcache accesses   (61.71%)
+             5,479      cpu_atom/LLC-loads/                                                     (38.29%)
+             7,042      cpu_core/LLC-loads/                                                     (61.71%)
+                49      cpu_atom/LLC-load-misses/        #    0.89% of all LL-cache accesses    (38.29%)
+             3,047      cpu_core/LLC-load-misses/        #   43.27% of all LL-cache accesses    (61.71%)
+
+       0.002178496 seconds time elapsed
+
+       0.000000000 seconds user
+       0.002265000 seconds sys
+
+

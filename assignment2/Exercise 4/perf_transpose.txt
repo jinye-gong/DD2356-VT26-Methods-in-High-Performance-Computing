@@ -1,0 +1,117 @@
+=== transpose base N=64 ===
+Transpose 64 x 64
+Mode: base
+BaseTime = 3.00e-06 s, Base Rate = 1.09e+04 MB/s
+
+ Performance counter stats for './transpose.out 64':
+
+     <not counted>      cpu_atom/cycles/                                                        (0.00%)
+         1,893,468      cpu_core/cycles/                                                      
+     <not counted>      cpu_atom/instructions/                                                  (0.00%)
+         3,988,309      cpu_core/instructions/           #    2.11  insn per cycle            
+     <not counted>      cpu_atom/L1-dcache-loads/                                               (0.00%)
+           798,072      cpu_core/L1-dcache-loads/                                             
+   <not supported>      cpu_atom/L1-dcache-load-misses/                                       
+            41,504      cpu_core/L1-dcache-load-misses/  #    5.20% of all L1-dcache accesses 
+     <not counted>      cpu_atom/LLC-loads/                                                     (0.00%)
+             1,938      cpu_core/LLC-loads/                                                   
+     <not counted>      cpu_atom/LLC-load-misses/                                               (0.00%)
+             1,359      cpu_core/LLC-load-misses/        #   70.12% of all LL-cache accesses  
+
+       0.002357370 seconds time elapsed
+
+       0.000768000 seconds user
+       0.001536000 seconds sys
+
+
+
+=== transpose base N=128 ===
+Transpose 128 x 128
+Mode: base
+BaseTime = 1.83e-05 s, Base Rate = 7.16e+03 MB/s
+
+ Performance counter stats for './transpose.out 128':
+
+         7,217,612      cpu_atom/cycles/                                                        (60.79%)
+         8,145,671      cpu_core/cycles/                                                        (39.21%)
+         9,434,740      cpu_atom/instructions/           #    1.31  insn per cycle              (60.79%)
+        19,601,228      cpu_core/instructions/           #    2.41  insn per cycle              (39.21%)
+         2,200,423      cpu_atom/L1-dcache-loads/                                               (60.79%)
+         3,255,087      cpu_core/L1-dcache-loads/                                               (39.21%)
+   <not supported>      cpu_atom/L1-dcache-load-misses/                                       
+         3,034,611      cpu_core/L1-dcache-load-misses/  #   93.23% of all L1-dcache accesses   (39.21%)
+             2,862      cpu_atom/LLC-loads/                                                     (60.79%)
+             2,762      cpu_core/LLC-loads/                                                     (39.21%)
+               110      cpu_atom/LLC-load-misses/        #    3.84% of all LL-cache accesses    (60.79%)
+               652      cpu_core/LLC-load-misses/        #   23.61% of all LL-cache accesses    (39.21%)
+
+       0.004905897 seconds time elapsed
+
+       0.003734000 seconds user
+       0.001244000 seconds sys
+
+
+
+=== transpose base N=2048 ===
+Transpose 2048 x 2048
+Mode: base
+BaseTime = 2.84e-02 s, Base Rate = 1.18e+03 MB/s
+
+ Performance counter stats for './transpose.out 2048':
+
+     <not counted>      cpu_atom/cycles/                                                        (0.00%)
+    14,873,216,606      cpu_core/cycles/                                                      
+     <not counted>      cpu_atom/instructions/                                                  (0.00%)
+     3,233,311,893      cpu_core/instructions/           #    0.22  insn per cycle            
+     <not counted>      cpu_atom/L1-dcache-loads/                                               (0.00%)
+       625,057,103      cpu_core/L1-dcache-loads/                                             
+   <not supported>      cpu_atom/L1-dcache-load-misses/                                       
+       480,411,901      cpu_core/L1-dcache-load-misses/  #   76.86% of all L1-dcache accesses 
+     <not counted>      cpu_atom/LLC-loads/                                                     (0.00%)
+       399,433,420      cpu_core/LLC-loads/                                                   
+     <not counted>      cpu_atom/LLC-load-misses/                                               (0.00%)
+       131,101,428      cpu_core/LLC-load-misses/        #   32.82% of all LL-cache accesses  
+
+       3.038130512 seconds time elapsed
+
+       3.014805000 seconds user
+       0.022998000 seconds sys
+
+
+
+=== transpose blocked N=2048 block=32 ===
+Transpose 2048 x 2048
+Mode: blocked
+Block size: 32
+BaseTime = 7.81e-03 s, Base Rate = 4.30e+03 MB/s
+
+ Performance counter stats for './transpose.out 2048 blocked 32':
+
+     <not counted>      cpu_atom/cycles/                                                        (0.00%)
+     4,506,802,675      cpu_core/cycles/                                                      
+     <not counted>      cpu_atom/instructions/                                                  (0.00%)
+     3,341,221,171      cpu_core/instructions/           #    0.74  insn per cycle            
+     <not counted>      cpu_atom/L1-dcache-loads/                                               (0.00%)
+       620,472,818      cpu_core/L1-dcache-loads/                                             
+   <not supported>      cpu_atom/L1-dcache-load-misses/                                       
+       208,795,192      cpu_core/L1-dcache-load-misses/  #   33.65% of all L1-dcache accesses 
+     <not counted>      cpu_atom/LLC-loads/                                                     (0.00%)
+        17,883,390      cpu_core/LLC-loads/                                                   
+     <not counted>      cpu_atom/LLC-load-misses/                                               (0.00%)
+         4,858,130      cpu_core/LLC-load-misses/        #   27.17% of all LL-cache accesses  
+
+       0.909651912 seconds time elapsed
+
+       0.879595000 seconds user
+       0.029986000 seconds sys
+
+
+
+Use these formulas in the report:
+  IPC = instructions / cycles
+  L1 miss rate  ~= L1-dcache-load-misses / L1-dcache-loads
+  LLC miss rate ~= LLC-load-misses / LLC-loads
+
+Bandwidth is printed by the program itself as:
+  Base Rate = 8*N*N / time   (MB/s shown as *1e-6)
+

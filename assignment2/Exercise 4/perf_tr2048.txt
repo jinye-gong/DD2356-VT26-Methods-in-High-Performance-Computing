@@ -1,0 +1,25 @@
+Transpose 2048 x 2048
+Mode: base
+BaseTime = 2.55e-02 s, Base Rate = 1.31e+03 MB/s
+
+ Performance counter stats for 'taskset -c 0 ./transpose.out 2048':
+
+     <not counted>      cpu_atom/cycles/                                                        (0.00%)
+    13,317,084,966      cpu_core/cycles/                                                      
+     <not counted>      cpu_atom/instructions/                                                  (0.00%)
+     3,221,281,583      cpu_core/instructions/           #    0.24  insn per cycle            
+     <not counted>      cpu_atom/L1-dcache-loads/                                               (0.00%)
+       622,537,739      cpu_core/L1-dcache-loads/                                             
+   <not supported>      cpu_atom/L1-dcache-load-misses/                                       
+       491,704,731      cpu_core/L1-dcache-load-misses/  #   78.98% of all L1-dcache accesses 
+     <not counted>      cpu_atom/LLC-loads/                                                     (0.00%)
+       389,712,987      cpu_core/LLC-loads/                                                   
+     <not counted>      cpu_atom/LLC-load-misses/                                               (0.00%)
+       103,725,157      cpu_core/LLC-load-misses/        #   26.62% of all LL-cache accesses  
+
+       2.748387155 seconds time elapsed
+
+       2.729811000 seconds user
+       0.017998000 seconds sys
+
+

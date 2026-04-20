@@ -1,0 +1,27 @@
+1. Initializing Matrices 
+   Mode: optimized (i-k-j loop order)
+2. Matrix Multiply 
+3. Sum = 249.968991 
+4. time = 0.208074
+
+ Performance counter stats for 'taskset -c 0 ./matrix_multiply_1000.out opt':
+
+     <not counted>      cpu_atom/cycles/                                                        (0.00%)
+    11,086,582,661      cpu_core/cycles/                                                      
+     <not counted>      cpu_atom/instructions/                                                  (0.00%)
+    38,776,405,192      cpu_core/instructions/           #    3.50  insn per cycle            
+     <not counted>      cpu_atom/L1-dcache-loads/                                               (0.00%)
+    11,064,262,393      cpu_core/L1-dcache-loads/                                             
+   <not supported>      cpu_atom/L1-dcache-load-misses/                                       
+       801,696,844      cpu_core/L1-dcache-load-misses/  #    7.25% of all L1-dcache accesses 
+     <not counted>      cpu_atom/LLC-loads/                                                     (0.00%)
+       307,647,993      cpu_core/LLC-loads/                                                   
+     <not counted>      cpu_atom/LLC-load-misses/                                               (0.00%)
+         6,262,432      cpu_core/LLC-load-misses/        #    2.04% of all LL-cache accesses  
+
+       2.314184842 seconds time elapsed
+
+       2.301639000 seconds user
+       0.011992000 seconds sys
+
+

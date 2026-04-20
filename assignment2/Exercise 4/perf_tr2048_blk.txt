@@ -1,0 +1,26 @@
+Transpose 2048 x 2048
+Mode: blocked
+Block size: 32
+BaseTime = 7.84e-03 s, Base Rate = 4.28e+03 MB/s
+
+ Performance counter stats for 'taskset -c 0 ./transpose.out 2048 blocked 32':
+
+     3,026,083,419      cpu_atom/cycles/                                                        (0.01%)
+     4,434,983,910      cpu_core/cycles/                                                        (99.99%)
+     2,037,268,016      cpu_atom/instructions/           #    0.67  insn per cycle              (0.01%)
+     3,338,178,610      cpu_core/instructions/           #    0.75  insn per cycle              (99.99%)
+       464,531,148      cpu_atom/L1-dcache-loads/                                               (0.01%)
+       619,785,578      cpu_core/L1-dcache-loads/                                               (99.99%)
+   <not supported>      cpu_atom/L1-dcache-load-misses/                                       
+       209,894,268      cpu_core/L1-dcache-load-misses/  #   33.87% of all L1-dcache accesses   (99.99%)
+         3,534,854      cpu_atom/LLC-loads/                                                     (0.01%)
+        17,877,789      cpu_core/LLC-loads/                                                     (99.99%)
+           215,237      cpu_atom/LLC-load-misses/        #    6.09% of all LL-cache accesses    (0.01%)
+         4,729,053      cpu_core/LLC-load-misses/        #   26.45% of all LL-cache accesses    (99.99%)
+
+       0.916322106 seconds time elapsed
+
+       0.898934000 seconds user
+       0.016979000 seconds sys
+
+

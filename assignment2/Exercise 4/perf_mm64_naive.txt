@@ -1,0 +1,27 @@
+1. Initializing Matrices 
+   Mode: naive (i-j-k loop order)
+2. Matrix Multiply 
+3. Sum = 15.948628 
+4. time = 0.000038
+
+ Performance counter stats for 'taskset -c 0 ./matrix_multiply_64.out':
+
+     <not counted>      cpu_atom/cycles/                                                        (0.00%)
+         6,611,409      cpu_core/cycles/                                                      
+     <not counted>      cpu_atom/instructions/                                                  (0.00%)
+        14,759,747      cpu_core/instructions/           #    2.23  insn per cycle            
+     <not counted>      cpu_atom/L1-dcache-loads/                                               (0.00%)
+         3,656,767      cpu_core/L1-dcache-loads/                                             
+   <not supported>      cpu_atom/L1-dcache-load-misses/                                       
+            27,060      cpu_core/L1-dcache-load-misses/  #    0.74% of all L1-dcache accesses 
+     <not counted>      cpu_atom/LLC-loads/                                                     (0.00%)
+             6,990      cpu_core/LLC-loads/                                                   
+     <not counted>      cpu_atom/LLC-load-misses/                                               (0.00%)
+             2,775      cpu_core/LLC-load-misses/        #   39.70% of all LL-cache accesses  
+
+       0.003345608 seconds time elapsed
+
+       0.000000000 seconds user
+       0.002238000 seconds sys
+
+

@@ -1,0 +1,15 @@
+Weak scaling efficiency E_w(p) = T_1 / T_p
+   p     Dardel    Jupyter
+   1     1.0000     1.0000
+   2     0.8977     0.9993
+   4     0.9838     0.8297
+   8     0.9564     0.5563
+  16     0.6744     0.5599
+
+Strong scaling efficiency E_s(p) = T_1 / (p * T_p)
+   p     Dardel    Jupyter
+   1     1.0000     1.0000
+   2     1.0330     0.9990
+   4     1.0168     0.9230
+   8     0.9684     0.5827
+  16     0.8514     0.6076

@@ -1,0 +1,5 @@
+Task 3 (weak scaling) — 1–2 sentences for the report:
+Both systems stay near ideal efficiency at low process counts, but efficiency drops at higher p—especially on the school Jupyter node—due to MPI communication and contention on a shared medium-CPU environment; Dardel maintains higher weak-scaling efficiency at 16 processes.
+
+Task 4 (strong scaling) — 1–2 sentences for the report:
+Dardel shows strong-scaling efficiency close to or above ideal for small p (timing noise) and a gradual decline to ~0.85 at 16 processes; the school cluster degrades earlier (notably at 8–16 processes), consistent with overhead and resource sharing on a single interactive node.

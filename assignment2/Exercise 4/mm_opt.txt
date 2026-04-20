@@ -1,0 +1,5 @@
+1. Initializing Matrices 
+   Mode: optimized (i-k-j loop order)
+2. Matrix Multiply 
+3. Sum = 249.968991 
+4. time = 0.181548

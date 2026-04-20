@@ -1,0 +1,4 @@
+Transpose 2048 x 2048
+Mode: blocked
+Block size: 32
+BaseTime = 7.57e-03 s, Base Rate = 4.43e+03 MB/s

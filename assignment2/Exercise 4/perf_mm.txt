@@ -1,0 +1,63 @@
+=== Naive (i-j-k) ===
+1. Initializing Matrices 
+   Mode: naive (i-j-k loop order)
+2. Matrix Multiply 
+3. Sum = 249.968991 
+4. time = 0.332782
+
+ Performance counter stats for './matrix_multiply.out':
+
+    13,495,686,301      cpu_atom/cycles/                                                        (0.09%)
+    17,840,437,415      cpu_core/cycles/                                                        (99.91%)
+    19,715,423,738      cpu_atom/instructions/           #    1.46  insn per cycle              (0.09%)
+    44,282,386,865      cpu_core/instructions/           #    2.48  insn per cycle              (99.91%)
+     5,247,370,272      cpu_atom/L1-dcache-loads/                                               (0.09%)
+    11,069,219,025      cpu_core/L1-dcache-loads/                                               (99.91%)
+   <not supported>      cpu_atom/L1-dcache-load-misses/                                       
+     5,820,126,584      cpu_core/L1-dcache-load-misses/  #   52.58% of all L1-dcache accesses   (99.91%)
+       239,248,167      cpu_atom/LLC-loads/                                                     (0.09%)
+     1,309,692,621      cpu_core/LLC-loads/                                                     (99.91%)
+            30,843      cpu_atom/LLC-load-misses/        #    0.01% of all LL-cache accesses    (0.09%)
+         7,060,133      cpu_core/LLC-load-misses/        #    0.54% of all LL-cache accesses    (99.91%)
+
+       3.696926805 seconds time elapsed
+
+       3.687341000 seconds user
+       0.008998000 seconds sys
+
+
+
+=== Optimized (i-k-j) ===
+1. Initializing Matrices 
+   Mode: optimized (i-k-j loop order)
+2. Matrix Multiply 
+3. Sum = 249.968991 
+4. time = 0.184792
+
+ Performance counter stats for './matrix_multiply.out opt':
+
+     7,653,286,447      cpu_atom/cycles/                                                        (0.13%)
+    10,042,170,299      cpu_core/cycles/                                                        (99.87%)
+     8,499,802,613      cpu_atom/instructions/           #    1.11  insn per cycle              (0.13%)
+    38,818,268,084      cpu_core/instructions/           #    3.87  insn per cycle              (99.87%)
+     2,471,400,938      cpu_atom/L1-dcache-loads/                                               (0.13%)
+    11,075,970,269      cpu_core/L1-dcache-loads/                                               (99.87%)
+   <not supported>      cpu_atom/L1-dcache-load-misses/                                       
+     1,019,560,601      cpu_core/L1-dcache-load-misses/  #    9.21% of all L1-dcache accesses   (99.87%)
+         1,703,374      cpu_atom/LLC-loads/                                                     (0.13%)
+       219,272,102      cpu_core/LLC-loads/                                                     (99.87%)
+                 0      cpu_atom/LLC-load-misses/                                               (0.13%)
+         4,090,802      cpu_core/LLC-load-misses/        #    1.87% of all LL-cache accesses    (99.87%)
+
+       2.080218633 seconds time elapsed
+
+       2.074081000 seconds user
+       0.006000000 seconds sys
+
+
+
+Use these formulas in the report:
+  IPC = instructions / cycles
+  L1 miss rate  ~= L1-dcache-load-misses / L1-dcache-loads
+  LLC miss rate ~= LLC-load-misses / LLC-loads
+
