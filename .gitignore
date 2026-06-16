@@ -30,3 +30,15 @@ assignment3/*.tar.gz
 assignment3/Exercise 3/output_*.txt
 assignment3/Bonus/neuron_output*.txt
 assignment3/Bonus/neuron_output_task.txt
+assignment3/Bonus/neuron_omp_task
+assignment3/Exercise 1/matmul_ex1_task*
+assignment3/Exercise 2/bfs_ex2_task*
+assignment3/Exercise 3/shallow_water_ex3
+
+# Final project generated artifacts
+final/bin/
+final/data/*.txt
+!final/data/sample.edges
+final/results/**/ranks_*.txt
+final/results/**/*.log
+final/final_report_handoff_*/

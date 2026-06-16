@@ -1,6 +1,6 @@
 # DD2356 VT26 - Methods in High Performance Computing
 
-Coursework repository for **DD2356 (VT26)** at KTH. Contains source code, run scripts, experiment results, figures, and reports for Assignments 2–4.
+Coursework repository for **DD2356 (VT26)** at KTH. Contains source code, run scripts, experiment results, figures, and reports for Assignments 2–4 and the **Final Project** (parallel PageRank).
 
 ## Repository layout
 
@@ -9,6 +9,7 @@ Coursework repository for **DD2356 (VT26)** at KTH. Contains source code, run sc
 | `assignment2/` | Performance measurement & roofline | MPI, `perf`, roofline model |
 | `assignment3/` | Shared-memory programming | OpenMP (parallel, SIMD, tasks, GPU) |
 | `assignment4/` | Distributed-memory programming | MPI (point-to-point, collectives, non-blocking) |
+| `final/` | Final project — parallel PageRank on web graphs | Serial, OpenMP, MPI, hybrid MPI+OpenMP |
 
 Each assignment follows a similar structure:
 
@@ -73,6 +74,26 @@ mpirun -np 4 ./wave
 
 Cluster jobs: see `assignment4/scripts/` (SLURM) and per-exercise `README.md`.
 
+### Final project — Parallel PageRank
+
+- **Application**: Power-iteration PageRank on sparse web graphs (CSR), with dangling-node handling
+- **Backends**: serial, OpenMP, MPI (1-D vertex partition), hybrid MPI+OpenMP (+ optional OpenMP target)
+- **Datasets**: `data/sample.edges` (smoke test); SNAP graphs via `data/download.sh` (not in git)
+- **Benchmarks**: strong/weak scaling on local machine, school cluster, and Dardel
+
+Report: `final/Final_Report.md`. Proposal: `final/Final Project Proposal.pdf`.
+
+Typical build & run:
+
+```bash
+cd final
+make serial omp          # local: no MPI required
+make all                 # with mpicc installed
+./scripts/run_local.sh   # smoke test + NetworkX verify
+```
+
+Cluster jobs: `final/jobs/*.sbatch`. Design notes: `final/docs/design.md`.
+
 ## Environment
 
 | Component | Assignments |
@@ -80,7 +101,8 @@ Cluster jobs: see `assignment4/scripts/` (SLURM) and per-exercise `README.md`.
 | `gcc` / `clang` + OpenMP (`-fopenmp`) | 3 |
 | `mpicc` / `mpirun` (Open MPI or MPICH) | 2, 4 |
 | Python 3 + `numpy`, `matplotlib` | 2–4 (plotting) |
-| Dardel / school cluster (`module load`, `srun`) | 2–4 |
+| Dardel / school cluster (`module load`, `srun`) | 2–4, final |
+| NetworkX (optional correctness check) | final |
 
 ## Git & ignored files
 
@@ -89,6 +111,7 @@ The following are **not** tracked (see `.gitignore`):
 - Compiled binaries (`*.o`, `*.out`, `a.out`, exercise build targets)
 - Upload archives (`assignment2_upload.zip`, `assignment3.zip`, `assignment3/*.tar.gz`)
 - Large regenerated outputs (`assignment3/Exercise 3/output_*.txt`, bonus neuron dumps)
+- Final project binaries (`final/bin/`), SNAP datasets (`final/data/*.txt`), rank-vector dumps (`final/results/**/ranks_*.txt`), handoff snapshot (`final/final_report_handoff_*/`)
 - Editor / Python cache (`.vscode/`, `__pycache__/`, …)
 
 Source code, scripts, CSV results, plots, screenshots, and reports are kept under version control.
@@ -97,7 +120,7 @@ Source code, scripts, CSV results, plots, screenshots, and reports are kept unde
 
 # DD2356 VT26 - 高性能计算方法
 
-KTH 课程 **DD2356 (VT26)** 的作业仓库，包含 Assignment 2–4 的源代码、运行脚本、实验结果、图表与报告。
+KTH 课程 **DD2356 (VT26)** 的作业仓库，包含 Assignment 2–4 及 **Final Project**（并行 PageRank）的源代码、运行脚本、实验结果、图表与报告。
 
 ## 仓库结构
 
@@ -106,6 +129,7 @@ KTH 课程 **DD2356 (VT26)** 的作业仓库，包含 Assignment 2–4 的源代
 | `assignment2/` | 性能测量与 Roofline 模型 | MPI、`perf`、Roofline |
 | `assignment3/` | 共享内存编程 | OpenMP（并行、SIMD、Task、GPU） |
 | `assignment4/` | 分布式内存编程 | MPI（点对点、集合通信、非阻塞） |
+| `final/` | 期末项目 — 网页图并行 PageRank | 串行、OpenMP、MPI、MPI+OpenMP 混合 |
 
 各作业目录结构类似：
 
@@ -170,6 +194,26 @@ mpirun -np 4 ./wave
 
 集群作业：见 `assignment4/scripts/`（SLURM）及各练习 `README.md`。
 
+### Final Project — 并行 PageRank
+
+- **应用**：稀疏网页图上的幂迭代 PageRank（CSR 存储，显式处理 dangling 结点）
+- **实现**：串行、OpenMP、MPI（一维顶点划分）、MPI+OpenMP 混合（含可选 OpenMP target）
+- **数据**：`data/sample.edges`（冒烟测试）；SNAP 大图通过 `data/download.sh` 获取（不进 git）
+- **实验**：本地、学校集群、Dardel 上的强/弱扩展 benchmark
+
+报告：`final/Final_Report.md`。提案：`final/Final Project Proposal.pdf`。
+
+典型编译与运行：
+
+```bash
+cd final
+make serial omp          # 本地无需 MPI
+make all                 # 已安装 mpicc 时
+./scripts/run_local.sh   # 冒烟测试 + NetworkX 验证
+```
+
+集群作业：`final/jobs/*.sbatch`。设计说明：`final/docs/design.md`。
+
 ## 环境要求
 
 | 组件 | 适用作业 |
@@ -177,7 +221,8 @@ mpirun -np 4 ./wave
 | `gcc` / `clang` + OpenMP（`-fopenmp`） | 3 |
 | `mpicc` / `mpirun`（Open MPI 或 MPICH） | 2、4 |
 | Python 3 + `numpy`、`matplotlib` | 2–4（画图） |
-| Dardel / 学校集群（`module load`、`srun`） | 2–4 |
+| Dardel / 学校集群（`module load`、`srun`） | 2–4、final |
+| NetworkX（可选正确性校验） | final |
 
 ## Git 与忽略文件
 
@@ -186,6 +231,7 @@ mpirun -np 4 ./wave
 - 编译产物（`*.o`、`*.out`、`a.out`、练习生成的可执行文件）
 - 上交用压缩包（`assignment2_upload.zip`、`assignment3.zip`、`assignment3/*.tar.gz`）
 - 大体积可重新生成的输出（`assignment3/Exercise 3/output_*.txt`、Bonus 神经元输出等）
+- Final 编译产物（`final/bin/`）、SNAP 数据集（`final/data/*.txt`）、排名向量转储（`final/results/**/ranks_*.txt`）、报告交接快照（`final/final_report_handoff_*/`）
 - 编辑器 / Python 缓存（`.vscode/`、`__pycache__/` 等）
 
 源代码、脚本、CSV 结果、图表、截图与报告均保留在 Git 中。

@@ -1,0 +1,17 @@
+# Build outputs
+bin/
+*.o
+*.a
+__pycache__/
+
+# Large datasets (fetch via data/download.sh)
+data/*.txt
+data/*.txt.gz
+!data/sample.edges
+
+# Large rank-vector dumps and run logs (regenerable)
+results/**/ranks_*.txt
+results/**/*.log
+
+# One-off report handoff snapshot (duplicate of main tree)
+final_report_handoff_*/

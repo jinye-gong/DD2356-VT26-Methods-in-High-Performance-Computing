@@ -1,0 +1,8 @@
+ranks,edges,seconds,input
+1,200000,0.2779,results/weak_input_1r_200000e.txt
+2,400000,0.3520,results/weak_input_2r_200000e.txt
+4,800000,0.6140,results/weak_input_4r_200000e.txt
+8,1600000,0.7864,results/weak_input_8r_200000e.txt
+16,3200000,1.2220,results/weak_input_16r_200000e.txt
+28,5600000,1.6602,results/weak_input_28r_200000e.txt
+56,11200000,6.4240,results/weak_input_56r_200000e.txt

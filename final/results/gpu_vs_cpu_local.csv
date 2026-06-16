@@ -1,0 +1,4 @@
+config,seconds
+OMP CPU (32T),0.4727
+Hybrid CPU (1x32),2.1994
+OMP Target GPU,0.5398
