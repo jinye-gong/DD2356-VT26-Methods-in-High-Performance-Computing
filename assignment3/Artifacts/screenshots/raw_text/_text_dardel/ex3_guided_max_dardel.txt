@@ -1,0 +1,6 @@
+Grid size:     500 x 500
+Iterations:    1000
+OMP threads:   64
+Schedule:      guided
+OMP time:      0.198627 s
+Output:        output_guided_64.txt

@@ -1,0 +1,7 @@
+$ bash -lc OMP_NUM_THREADS=64 "/home/reticent/Desktop/kth study/DD2356 VT26 Methods in High Performance Computing/assignment3/Exercise 1/matmul_ex1_task4_gpu" 1024
+Matrix size: 1024 x 1024
+OpenMP target devices: 0
+Serial time:   3.146211 s
+OMP time:      0.237884 s
+Speedup:       13.226 x
+Verification:  PASS

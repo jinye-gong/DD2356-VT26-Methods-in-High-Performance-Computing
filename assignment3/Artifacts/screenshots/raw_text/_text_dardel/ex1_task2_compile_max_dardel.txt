@@ -1,0 +1,6 @@
+Matrix size: 1024 x 1024
+OMP max threads: 64
+Serial time:   11.027192 s
+OMP time:      8.771380 s
+Speedup:       1.257 x
+Verification:  PASS

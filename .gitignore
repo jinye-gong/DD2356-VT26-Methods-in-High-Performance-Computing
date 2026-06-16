@@ -23,3 +23,10 @@ assignment2/assignment2_upload.zip
 assignment2/assignment2_upload/
 assignment2/**/spmv
 assignment2/**/roofline
+
+# Assignment 3/4 generated artifacts
+assignment3.zip
+assignment3/*.tar.gz
+assignment3/Exercise 3/output_*.txt
+assignment3/Bonus/neuron_output*.txt
+assignment3/Bonus/neuron_output_task.txt

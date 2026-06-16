@@ -1,0 +1,26 @@
+# Dardel — Exercise 1: halo exchange + MPI_Wtime (wave_mpi.c)
+
+static void exchange_halos(int rank, int nprocs, int local_n, double *u) {
+    MPI_Status status;
+    if (rank > 0) {
+        MPI_Sendrecv(&u[1], 1, MPI_DOUBLE, rank - 1, 10,
+                     &u[0], 1, MPI_DOUBLE, rank - 1, 11,
+                     MPI_COMM_WORLD, &status);
+    }
+    if (rank < nprocs - 1) {
+        MPI_Sendrecv(&u[local_n], 1, MPI_DOUBLE, rank + 1, 11,
+                     &u[local_n + 1], 1, MPI_DOUBLE, rank + 1, 10,
+                     MPI_COMM_WORLD, &status);
+    }
+}
+
+    MPI_Barrier(MPI_COMM_WORLD);
+    t0 = MPI_Wtime();
+    for (int step = 0; step < global_steps; step++) {
+        exchange_halos(rank, nprocs, local_n, u);
+        compute_step_local(...);
+        ...
+    }
+    MPI_Barrier(MPI_COMM_WORLD);
+    t1 = MPI_Wtime();
+    if (rank == 0) printf("WALLTIME %.9f\n", t1 - t0);

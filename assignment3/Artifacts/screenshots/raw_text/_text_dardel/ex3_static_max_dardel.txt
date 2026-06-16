@@ -1,0 +1,6 @@
+Grid size:     500 x 500
+Iterations:    1000
+OMP threads:   64
+Schedule:      static
+OMP time:      0.263995 s
+Output:        output_static_64.txt

@@ -1,0 +1,1 @@
+$ gcc -O3 -fopenmp -march=native -DDISABLE_OFFLOAD /home/reticent/Desktop/kth study/DD2356 VT26 Methods in High Performance Computing/assignment3/Exercise 1/matmul_ex1_task4_gpu.c -o /home/reticent/Desktop/kth study/DD2356 VT26 Methods in High Performance Computing/assignment3/Exercise 1/matmul_ex1_task4_gpu

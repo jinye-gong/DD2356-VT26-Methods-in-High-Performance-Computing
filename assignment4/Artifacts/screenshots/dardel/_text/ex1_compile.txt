@@ -1,0 +1,8 @@
+$ cd ~/DD2356/assignment4
+$ source scripts/dardel_setup_env.sh
+$ cd "Exercise 1"
+$ cc -O3 -o wave_mpi wave_mpi.c -lm
+$ ls -la wave_mpi
+
+Loaded modules: PDC/24.11 PrgEnv-gnu/8.6.0 cray-mpich/8.1.31
+-rwx--x--x 1 weiyil weiyil 16808 ... wave_mpi

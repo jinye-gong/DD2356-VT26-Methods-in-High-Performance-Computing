@@ -1,0 +1,51 @@
+            C[i * n + j] = sum;
+        }
+    }
+}
+
+/* Task 2: OpenMP SIMD version */
+static void matmul_omp_simd(const double *A, const double *B, double *C, int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            double sum = 0.0;
+#pragma omp simd reduction(+ : sum)
+            for (int k = 0; k < n; k++) {
+                sum += A[i * n + k] * B[k * n + j];
+            }
+            C[i * n + j] = sum;
+        }
+    }
+}
+
+static int verify(const double *ref, const double *test, int n) {
+    const double eps = 1e-9;
+    for (int i = 0; i < n * n; i++) {
+        if (fabs(ref[i] - test[i]) > eps) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int main(int argc, char **argv) {
+    int n = 1024;
+    if (argc > 1) {
+        n = atoi(argv[1]);
+        if (n <= 0) {
+            fprintf(stderr, "Invalid matrix size: %s\n", argv[1]);
+            return 1;
+        }
+    }
+
+    size_t bytes = (size_t)n * (size_t)n * sizeof(double);
+    double *A = (double *)malloc(bytes);
+    double *B = (double *)malloc(bytes);
+    double *C_serial = (double *)malloc(bytes);
+    double *C_simd = (double *)malloc(bytes);
+
+    if (!A || !B || !C_serial || !C_simd) {
+        fprintf(stderr, "Memory allocation failed for n=%d\n", n);
+        free(A);
+        free(B);
+        free(C_serial);
+        free(C_simd);

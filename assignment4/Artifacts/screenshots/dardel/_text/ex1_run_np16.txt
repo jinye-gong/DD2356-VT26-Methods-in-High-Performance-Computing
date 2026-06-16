@@ -1,0 +1,7 @@
+$ export WAVE_N=200000 WAVE_STEPS=500 WAVE_IO=0
+$ srun -A edu26.dd2356 -p main -N 4 --ntasks=16 --ntasks-per-node=4 ./wave_mpi
+
+WALLTIME 0.014449356
+Simulation complete (N=200000, steps=500, io=0, nprocs=16).
+
+(Job: batch a4-ex1-wave, partition main, 4 nodes x 4 ranks)

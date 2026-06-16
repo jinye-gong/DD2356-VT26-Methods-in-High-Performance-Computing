@@ -1,0 +1,7 @@
+$ bash -lc OMP_NUM_THREADS=64 "/home/reticent/Desktop/kth study/DD2356 VT26 Methods in High Performance Computing/assignment3/Exercise 1/matmul_ex1_task2_simd" 1024
+Matrix size: 1024 x 1024
+OMP max threads: 64
+Serial time:   3.136452 s
+OMP time:      3.081329 s
+Speedup:       1.018 x
+Verification:  PASS

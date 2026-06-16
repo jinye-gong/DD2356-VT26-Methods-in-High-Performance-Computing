@@ -1,0 +1,8 @@
+$ cat ~/DD2356/assignment4/Exercise\ 1/scaling_dardel_ex1.csv
+
+nprocs,time_sec
+1,0.144701577
+2,0.073783551
+4,0.039008090
+8,0.023068404
+16,0.014449356

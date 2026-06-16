@@ -1,0 +1,7 @@
+Graph: vertices=50000 edges=400000 degree=8
+OMP max threads: 64
+Serial time:   0.003156 s
+OMP time:      0.023484 s
+Speedup:       0.134 x
+Visited:       49982
+Verification:  PASS

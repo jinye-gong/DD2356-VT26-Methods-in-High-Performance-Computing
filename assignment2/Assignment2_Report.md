@@ -10,7 +10,12 @@
 
 ## Contributions
 
-The work in this assignment was shared equally between the two group members. We divided the experiments on Dardel, the school cluster, analysis, plotting, and report writing evenly, and both contributed throughout the whole process.
+We split the assignment work evenly. Both of us ran experiments on Dardel and the school cluster, and we jointly handled data analysis, plotting, and report writing.
+
+## AI Assistance Statement
+
+AI tools were used only for Markdown-level support in this report, specifically for formula syntax formatting and document layout/format organization.  
+All experiments, command execution, performance measurements, plots, result interpretation, and final technical conclusions were completed and verified by the authors.
 
 ---
 
@@ -20,7 +25,7 @@ The work in this assignment was shared equally between the two group members. We
 
 #### 1. Steps for compiling the code on Dardel
 
-We uploaded `pi_mpi.c` and `Makefile` to `~/dd2356_a2` on Dardel. On the login node, the default Cray programming environment already provides MPI compiler wrappers. We built two binaries from the same source: one for strong scaling (default) and one for weak scaling (macro `ASSIGNMENT_WEAK_SCALING`).
+We uploaded `pi_mpi.c` and `Makefile` to `~/dd2356_a2` on Dardel. The default Cray environment already provides MPI compiler wrappers, so we compiled two binaries from the same source: one for strong scaling (default) and one for weak scaling (with `ASSIGNMENT_WEAK_SCALING`).
 
 ```bash
 cd ~/dd2356_a2
@@ -28,7 +33,7 @@ make clean
 make CC=cc pi_mpi_strong pi_mpi_weak
 ```
 
-This produces `pi_mpi_strong` and `pi_mpi_weak`. We use `cc` because it is the Cray MPI wrapper on Dardel and links against the correct `cray-mpich` libraries.
+This gives us `pi_mpi_strong` and `pi_mpi_weak`. We chose `cc` because it is the standard Cray MPI wrapper on Dardel and links correctly with `cray-mpich`.
 
 #### 2. Slurm commands used for executing the tests
 
@@ -153,10 +158,9 @@ Figure 5 plots $E_{\mathrm{weak}}(p)$ for Dardel and the school Jupyter environm
 
 ![Figure 5: Weak scaling efficiency on Dardel vs. school cluster.](Exercise 1/task3_weak_scaling_efficiency.png)
 
-**Observations (1–2 sentences):**  
-Both systems stay close to ideal scaling at small $p$, but the curve falls at larger $p$, especially on the school Jupyter node, because of MPI overhead and contention on a shared medium-CPU node. Dardel keeps a higher weak-scaling efficiency at 16 processes.
+From our runs, weak scaling is quite stable at small process counts on both systems. At higher $p$, the school cluster drops more clearly, while Dardel stays relatively better at 16 processes; this matches what we observed in practice on a shared Jupyter node versus a dedicated HPC environment.
 
-Numerical values:
+Table 1 reports the weak-scaling efficiency values on Dardel and the school cluster.
 
 | p    | Dardel | Jupyter |
 | ---- | -----: | ------: |
@@ -182,10 +186,9 @@ Figure 6 plots $E_{\mathrm{strong}}(p)$ for both systems.
 
 ![Figure 6: Strong scaling efficiency on Dardel vs. school cluster.](Exercise 1/task4_strong_scaling_efficiency.png)
 
-**Observations (1–2 sentences):**  
-On Dardel, $E_{\mathrm{strong}}(p)$ stays near or slightly above 1 for small $p$, which is likely due to timing noise, and then drops to about 0.85 at 16 ranks. On the school cluster, it falls earlier, especially around 8 to 16 ranks, which is consistent with MPI overhead and resource sharing on one interactive node.
+In strong scaling, Dardel behaves close to the ideal trend at low process counts (with slight overshoot likely from timing noise), then falls to about 0.85 at 16 ranks. On the school cluster, the drop starts earlier around 8 to 16 ranks, which is consistent with higher communication overhead and shared-node contention.
 
-Numerical values:
+Table 2 reports the strong-scaling efficiency values on Dardel and the school cluster.
 
 | p    | Dardel | Jupyter |
 | ---- | -----: | ------: |
@@ -201,8 +204,8 @@ Numerical values:
 
 ### Common code/build notes
 
-We used the provided `simple_roofline` skeleton and compiled it with OpenMP.  
-To make the project robust across systems, we used a C++-correct Makefile pattern (`.cpp -> .o`) and compiler variables (`CXX`, `CXXFLAGS`). We also increased per-point measurement stability by repeating each kernel call in the timing region and scaling both operation count and memory traffic consistently.
+We started from the provided `simple_roofline` skeleton and compiled it with OpenMP.  
+To make the build work smoothly across systems, we switched to a C++-correct Makefile pattern (`.cpp -> .o`) and used `CXX`/`CXXFLAGS`. We also repeated each kernel call inside the timing region, and scaled both operation count and memory traffic accordingly, so the GFLOPS values were more stable.
 
 ### Task 1: Dardel roofline
 
@@ -237,7 +240,7 @@ make
 python3 plot_roofline.py --input local_roofline_raw.txt --title "Local Roofline" --output local_roofline.png
 ```
 
-No extra local-only Makefile change was needed beyond the shared updated Makefile.
+No extra local-only Makefile changes were needed beyond the shared updated Makefile.
 
 #### Local final roofline figure
 
@@ -259,13 +262,13 @@ cd ~/dd2356_a2/Exercise\ 2
 python3 plot_roofline.py --input school_roofline_raw.txt --title "School Cluster Roofline (DD2356 Medium CPU)" --output school_roofline.png
 ```
 
-No additional cluster-specific Makefile edits were required beyond the shared updated Makefile.
+No extra cluster-specific Makefile edits were needed beyond the shared updated Makefile.
 
 #### School cluster final roofline figure
 
 ![Figure 8: School cluster roofline (SP/DP/INT).](Exercise 2/school_roofline.png)
 
-From the school-cluster output, the observed peaks are:
+From the school-cluster run, the peak values are:
 
 - Single precision peak: **1848.89 GFLOPS**
 - Double precision peak: **922.34 GFLOPS**
@@ -275,7 +278,7 @@ From the school-cluster output, the observed peaks are:
 
 ![Figure 10: Dardel vs school cluster roofline comparison (SP/DP/INT).](Exercise 2/dardel_vs_school_roofline.png)
 
-In this experiment, the school cluster reaches much higher SP/DP/INT ceilings than Dardel, so compute-intensive kernels have more headroom on the school cluster. Dardel’s curves saturate earlier and at lower throughput, which means high-intensity kernels hit the compute roof sooner and gain less from further arithmetic-intensity increases.
+In our measurements, the school cluster reaches much higher SP/DP/INT ceilings than Dardel. This means compute-heavy kernels have more headroom on the school cluster. Dardel saturates earlier and at lower throughput, so high-intensity kernels hit the compute roof sooner and gain less from further intensity increases.
 
 ---
 
@@ -295,13 +298,13 @@ $$
 \mathrm{FLOPs} \approx 10N
 $$
 
-Using the assignment assumption “one instruction per cycle” and one-core clock frequency $f$:
+Following the assignment assumption of one instruction per cycle, with one-core clock frequency $f$:
 
 $$
 T_{\mathrm{model}} \approx \frac{10N}{f}
 $$
 
-This model intentionally excludes data movement and memory effects.
+Here we intentionally ignore data movement and memory effects.
 
 ### 2. Estimated execution time from the simple model
 
@@ -321,9 +324,9 @@ Estimated time (seconds) for $N=\{10^4,10^6,10^8\}$:
 
 ### 3. Measured performance (time and FLOP/s)
 
-#### How it is measured (1–2 sentences)
+#### Measurement method
 
-We compile `spmv.c` with optimization (`-O3 -march=native`) and run for `n=100,1000,10000`, corresponding to $N=n^2=10^4,10^6,10^8$. We read execution time from the program output and compute throughput as:
+We compiled `spmv.c` with optimization (`-O3 -march=native`) and ran it for `n=100,1000,10000`, which correspond to $N=n^2=10^4,10^6,10^8$. Execution time is taken directly from the program output, and throughput is computed as:
 
 $$
 \mathrm{GFLOP/s} = \frac{2\cdot nnz}{T \cdot 10^9}
@@ -338,7 +341,7 @@ cd Exercise\ 3
 ./run_spmv_bench.sh
 ```
 
-Results:
+Table 3 summarizes the local SpMV measurements.
 
 | $N$ (`nrows`) | `nnz` | Time (s) | GFLOP/s |
 | ---: | ---: | ---: | ---: |
@@ -388,20 +391,20 @@ CPU frequency reported by `lscpu`: `CPU max MHz: 3800.0000`.
 
 ### 4. Model vs measured: reasons for differences
 
-The simple model is compute-only, while real SpMV is typically memory-bound and irregular due to indirect indexing (`x[ja[idx]]`). This is consistent with measured results across all systems: local and school-cluster throughput is about 1.15–1.43 GFLOP/s, and Dardel is about 1.13–1.98 GFLOP/s, all far below the compute-only model expectation. Main sources of discrepancy are memory latency/bandwidth limits, cache/TLB misses, branch/control overhead, and instruction mix (integer address arithmetic + loads/stores in addition to floating-point operations).
+The simple model only counts compute, but real SpMV is usually memory-bound and has irregular access because of indirect indexing (`x[ja[idx]]`). That matches our measurements: local and school-cluster throughput is around 1.15-1.43 GFLOP/s, and Dardel is around 1.13-1.98 GFLOP/s, all much lower than the compute-only estimate. The gap mainly comes from memory latency/bandwidth limits, cache/TLB misses, branch/control overhead, and extra non-FP instructions for addressing and data movement.
 
 ### 5. How to estimate or measure read bytes
 
 Two approaches:
 
-1. **Analytical estimate (recommended first):**  
+1. **Analytical estimate:**  
    Per nonzero, read `a[idx]` (8 B), `ja[idx]` (4 B), and `x[ja[idx]]` (8 B), i.e. about 20 B for 2 FLOPs. This gives a baseline arithmetic intensity around $0.1$ FLOP/B, further reduced when including row pointer and output write traffic.
 2. **Counter-based measurement:**  
    Use hardware counters (e.g., `perf`, LIKWID, or PAPI) to measure memory traffic events and convert to bytes; compare with the analytical estimate.
 
 ### 6. Annotating SpMV on the roofline model
 
-Using the analytical intensity ($\approx 0.09$–$0.10$ FLOP/B), the measured SpMV points should lie on the low-intensity (left) side of the roofline. For the local system, measured throughput around 1.2–1.4 GFLOP/s is far below the compute peak, indicating a memory-limited kernel where improving locality and reducing indirect-access cost is more impactful than increasing raw FLOP capability.
+With analytical intensity around $0.09$-$0.10$ FLOP/B, the SpMV points should sit on the low-intensity (left) side of the roofline. On the local system, the measured throughput (about 1.2-1.4 GFLOP/s) is far below the compute peak, so this kernel is clearly memory-limited. In practice, improving locality and reducing indirect-access cost matters more than chasing higher peak FLOPS.
 
 ---
 
@@ -411,7 +414,7 @@ Using the analytical intensity ($\approx 0.09$–$0.10$ FLOP/B), the measured Sp
 
 #### 1) Code transformation for optimized version
 
-Starting from the naive triple loop order `i-j-k`, we created an optimized implementation by reordering loops to `i-k-j`:
+Starting from the naive triple loop order `i-j-k`, we optimized it by reordering loops to `i-k-j`:
 
 - Naive: `matrix_b[k][j]` is accessed with a large stride in inner loops.
 - Optimized (`i-k-j`): both `matrix_b[k][j]` and `matrix_r[i][j]` are traversed contiguously in the inner `j` loop.
@@ -421,7 +424,7 @@ In `Exercise 4/matrix_multiply.c`, both versions are available in one executable
 - Naive: `./matrix_multiply.out`
 - Optimized: `./matrix_multiply.out opt`
 
-Compiled with the required flags:
+Compilation command (required flags):
 
 ```bash
 gcc -g -O2 matrix_multiply.c -o matrix_multiply.out
@@ -446,7 +449,7 @@ If direct miss-rate events are unavailable on a platform, these ratios are used 
 
 #### 3) Local perf results (`MSIZE=64,1000`)
 
-We ran:
+Commands we ran:
 
 ```bash
 gcc -g -O2 -DMSIZE=64 matrix_multiply.c -o matrix_multiply_64.out
@@ -457,7 +460,7 @@ perf stat -e cycles,instructions,L1-dcache-loads,L1-dcache-load-misses,LLC-loads
 perf stat -e cycles,instructions,L1-dcache-loads,L1-dcache-load-misses,LLC-loads,LLC-load-misses taskset -c 0 ./matrix_multiply_1000.out opt
 ```
 
-Results:
+Table 4 summarizes the `MSIZE=64` and `MSIZE=1000` matrix-multiply profiling results.
 
 | MSIZE | Impl. | Elapsed time (s) | IPC | L1 miss rate | LLC miss rate |
 | ---: | --- | ---: | ---: | ---: | ---: |
@@ -470,7 +473,7 @@ For `MSIZE=1000`, loop reordering reduces elapsed time by about **1.76×** and s
 
 #### 4) Main factors impacting performance
 
-For smaller matrices (e.g., `MSIZE=64`), data tends to fit in lower-level caches and the difference between naive and optimized is smaller. For larger matrices (e.g., `MSIZE=1000`), cache locality dominates: the optimized loop order significantly reduces cache-miss pressure, so memory hierarchy behavior becomes the main performance driver.
+For small matrices (e.g., `MSIZE=64`), most data fits in cache, so the gap between naive and optimized is limited. For larger matrices (e.g., `MSIZE=1000`), locality becomes the key factor: loop reordering cuts cache-miss pressure and clearly improves runtime.
 
 ### Task 2: Matrix Transpose Profiling and Cache-Reuse Optimization
 
@@ -484,7 +487,7 @@ In `Exercise 4/transpose.c`, we added:
   - Base: `./transpose.out N`
   - Blocked: `./transpose.out N blocked 32`
 
-Compiled with the required flags:
+Compilation command (required flags):
 
 ```bash
 gcc -O2 -o transpose.out transpose.c
@@ -522,9 +525,9 @@ Blocked mode (`./transpose.out 2048 blocked 32`) snapshot:
 | ---: | ---: | ---: | ---: | ---: | ---: |
 | 2048 | 7.84e-03 | 4.28e+03 | 0.720 | 19.357% | 23.091% |
 
-#### 4) Observations and cache-reuse analysis
+#### 4) Cache reuse analysis
 
-For small matrices, blocking may not always help because base traversal can already leverage cache and loop overhead may dominate. For larger matrices (`N=2048`), blocking substantially improves locality: bandwidth rises from **1.31e3 MB/s** to **4.28e3 MB/s**, while L1 miss rate drops from **78.98%** to **19.36%**.
+For small matrices, blocking is not always beneficial because the baseline traversal already uses cache reasonably well and loop overhead can dominate. For large matrices (`N=2048`), blocking helps a lot: bandwidth increases from **1.31e3 MB/s** to **4.28e3 MB/s**, and L1 miss rate drops from **78.98%** to **19.36%**.
 
 ---
 
@@ -543,10 +546,10 @@ sbatch slurm_dardel_pingpong.sh
 
 In `slurm_dardel_pingpong.sh`:
 
-- `#SBATCH -N 2 -n 2 --ntasks-per-node=1` ensures two ranks on two different nodes.
+- `#SBATCH -N 2 -n 2 --ntasks-per-node=1` places two ranks on two different nodes.
 - `#SBATCH -A edu26.dd2356 -p shared` uses the course allocation and available partition.
 
-This setup is chosen to measure inter-node RTT instead of intra-node latency.
+We chose this setup to measure inter-node RTT, not intra-node latency.
 
 #### School cluster (two ranks)
 
@@ -584,14 +587,13 @@ $$
 \mathrm{RTT}_{\mu s}(m) = -3.333704 + 0.000160607 \cdot m,\quad R^2 = 0.991840
 $$
 
-This high $R^2$ indicates that a linear model explains most variance over the measured message-size range.
+The high $R^2$ means a linear model explains most of the measured variance in this message-size range.
 
 #### School cluster measured vs predicted plot
 
 ![Figure 11: School cluster measured RTT vs predicted RTT (linear model).](Bonus/school_rtt_fit.png)
 
-**Observation (2–3 sentences).**  
-The linear model matches the measured RTT trend well for medium and large messages, as shown by the high $R^2$. At very small message sizes, fixed software/protocol overhead causes deviations from pure linear behavior. As message size grows, the bandwidth term dominates and RTT increases approximately linearly with bytes.
+The fitted line follows the measured RTT trend well for medium and large messages (high $R^2$). For very small messages, fixed software/protocol overhead is more visible, so deviations from a perfect line are expected. As message size increases, RTT becomes close to linear with bytes.
 
 #### Dardel analytical model
 
@@ -607,11 +609,10 @@ $$
 \mathrm{RTT}_{\mu s}(m) = 7.369035 + 0.000103454 \cdot m,\quad R^2 = 0.998939
 $$
 
-This fit is highly linear over the tested message-size range.
+The Dardel fit is also strongly linear over the tested message-size range.
 
 #### Dardel measured vs predicted plot
 
 ![Figure 12: Dardel measured RTT vs predicted RTT (linear model).](Bonus/dardel_rtt_fit.png)
 
-**Comparison and observation (2–3 sentences).**  
-Both systems are well described by the linear model (high $R^2$). Dardel has a lower slope ($\beta = 1.03454\times10^{-4}$ us/byte) than the school cluster ($\beta = 1.60607\times10^{-4}$ us/byte), indicating better effective bandwidth for larger messages. The school-cluster fit gives a non-physical negative intercept, which usually reflects limited small-message samples and fitting bias near the latency-dominated region.
+Both systems are captured well by the linear model (high $R^2$). Dardel has a lower slope ($\beta = 1.03454\times10^{-4}$ us/byte) than the school cluster ($\beta = 1.60607\times10^{-4}$ us/byte), so it provides better effective bandwidth for larger messages. The negative intercept in the school-cluster fit is mainly a fitting artifact in the small-message latency-dominated region.

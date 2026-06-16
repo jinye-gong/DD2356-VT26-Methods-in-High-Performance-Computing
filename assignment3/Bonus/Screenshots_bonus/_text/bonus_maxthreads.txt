@@ -1,0 +1,9 @@
+$ bash -lc OMP_NUM_THREADS=64 "/home/reticent/Desktop/kth study/DD2356 VT26 Methods in High Performance Computing/assignment3/Bonus/neuron_omp_task" task 50000 500 50 0 42
+Mode:          task
+Neurons:       50000
+Steps:         500
+Threshold:     50.00
+OMP threads:   64
+Write output:  0
+Total firings: 2083137
+OMP time:      0.254533 s

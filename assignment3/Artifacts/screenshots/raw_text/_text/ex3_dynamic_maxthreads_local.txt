@@ -1,0 +1,7 @@
+$ bash -lc OMP_NUM_THREADS=64 "/home/reticent/Desktop/kth study/DD2356 VT26 Methods in High Performance Computing/assignment3/Exercise 3/shallow_water_ex3" 500 1000 dynamic "/home/reticent/Desktop/kth study/DD2356 VT26 Methods in High Performance Computing/assignment3/Exercise 3/output_dynamic_64.txt"
+Grid size:     500 x 500
+Iterations:    1000
+OMP threads:   64
+Schedule:      dynamic
+OMP time:      0.560961 s
+Output:        /home/reticent/Desktop/kth study/DD2356 VT26 Methods in High Performance Computing/assignment3/Exercise 3/output_dynamic_64.txt

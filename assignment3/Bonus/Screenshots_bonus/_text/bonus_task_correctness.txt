@@ -1,0 +1,9 @@
+$ /home/reticent/Desktop/kth study/DD2356 VT26 Methods in High Performance Computing/assignment3/Bonus/neuron_omp_task task 1000 500 50 1 42
+Mode:          task
+Neurons:       1000
+Steps:         500
+Threshold:     50.00
+OMP threads:   24
+Write output:  1
+Total firings: 41656
+OMP time:      0.303818 s

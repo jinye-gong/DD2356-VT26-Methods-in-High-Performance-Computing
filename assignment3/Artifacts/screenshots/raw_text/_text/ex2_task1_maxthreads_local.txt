@@ -1,0 +1,8 @@
+$ bash -lc OMP_NUM_THREADS=64 "/home/reticent/Desktop/kth study/DD2356 VT26 Methods in High Performance Computing/assignment3/Exercise 2/bfs_ex2_task1_parallel" 50000 8
+Graph: vertices=50000 edges=400000 degree=8
+OMP max threads: 64
+Serial time:   0.002032 s
+OMP time:      0.010722 s
+Speedup:       0.190 x
+Visited:       49979
+Verification:  PASS

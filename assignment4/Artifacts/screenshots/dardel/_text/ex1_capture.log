@@ -1,0 +1,95 @@
+Loaded: 
+Currently Loaded Modules:
+  1) systemdefault/1.0.0 (S)   5) craype/2.7.33        9) cray-libsci/24.11.0
+  2) cpe/24.11                 6) cray-dsmml/0.3.0    10) PrgEnv-gnu/8.6.0
+  3) PDC/24.11                 7) libfabric/1.22.0    11) cray-mpich/8.1.31
+  4) gcc-native/13.2           8) craype-network-ofi
+
+  Where:
+   S:  Module is Sticky, requires --force to unload or purge
+
+ 
+cc: /opt/cray/pe/craype/2.7.33/bin/cc
+======== EX1 CODE (halo + timer) ========
+}
+
+static void exchange_halos(int rank, int nprocs, int local_n, double *u) {
+    MPI_Status status;
+
+    if (rank > 0) {
+        MPI_Sendrecv(&u[1], 1, MPI_DOUBLE, rank - 1, 10,
+                     &u[0], 1, MPI_DOUBLE, rank - 1, 11,
+                     MPI_COMM_WORLD, &status);
+    }
+    if (rank < nprocs - 1) {
+        MPI_Sendrecv(&u[local_n], 1, MPI_DOUBLE, rank + 1, 11,
+                     &u[local_n + 1], 1, MPI_DOUBLE, rank + 1, 10,
+                     MPI_COMM_WORLD, &status);
+    }
+}
+
+static void compute_step_local(int rank, int nprocs, int start, int local_n,
+                               const double *u, const double *u_prev, double *u_next) {
+    const double coef = C * C * DT * DT / (DX * DX);
+    (void)nprocs;
+
+    for (int i = 1; i <= local_n; i++) {
+        int g = start + i - 1;
+        if (g <= 0 || g >= global_n - 1) {
+            u_next[i] = u[i];
+            continue;
+        }
+        u_next[i] = 2.0 * u[i] - u_prev[i]
+                    + coef * (u[i + 1] - 2.0 * u[i] + u[i - 1]);
+    }
+}
+
+static void write_output_parallel(int rank, int nprocs, int start, int local_n,
+                                  const double *u, int step) {
+    double *gather_buf = NULL;
+    int *counts = NULL;
+    int *displs = NULL;
+
+    if (rank == 0) {
+        gather_buf = (double *)malloc((size_t)global_n * sizeof(double));
+        counts = (int *)malloc((size_t)nprocs * sizeof(int));
+        displs = (int *)malloc((size_t)nprocs * sizeof(int));
+    }
+
+    for (int r = 0; r < nprocs; r++) {
+        int s, ln;
+        partition_range(r, nprocs, global_n, &s, &ln);
+        if (rank == 0) {
+            counts[r] = ln;
+            displs[r] = s;
+        }
+    }
+
+    MPI_Gatherv((void *)&u[1], local_n, MPI_DOUBLE,
+                gather_buf, counts, displs, MPI_DOUBLE,
+                0, MPI_COMM_WORLD);
+
+    if (rank == 0) {
+        char filename[64];
+        snprintf(filename, sizeof(filename), "wave_output_%d.txt", step);
+        FILE *f = fopen(filename, "w");
+        for (int i = 0; i < global_n; i++) {
+            fprintf(f, "%.17g\n", gather_buf[i]);
+        }
+        fclose(f);
+        free(gather_buf);
+        free(counts);
+        free(displs);
+    }
+}
+
+int main(int argc, char **argv) {
+    int rank, nprocs;
+    int start, local_n;
+    double *u = NULL, *u_prev = NULL, *u_next = NULL;
+======== EX1 COMPILE ========
+No supported cpu target is set, CRAY_CPU_TARGET=x86-64 will be used.
+Load a valid targeting module or set CRAY_CPU_TARGET
+-rwx--x--x 1 weiyil weiyil 16808  5月 20 03:56 wave_mpi
+======== EX1 RUN np=16 ========
+srun: error: Unable to allocate resources: No partition specified or system default partition

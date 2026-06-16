@@ -1,0 +1,6 @@
+Matrix size: 1024 x 1024
+OpenMP target devices: 0
+Serial time:   8.353316 s
+OMP time:      0.342427 s
+Speedup:       24.394 x
+Verification:  PASS
